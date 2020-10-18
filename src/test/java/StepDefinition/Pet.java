@@ -22,7 +22,6 @@ public class Pet extends TestBase {
     @Given("^User has the endpoint \"([^\"]*)\"$")
     public void user_has_the_endpoint_something(String endpoint) throws IOException {
         URL = getKeyValue("Base_URL") + getKeyValue(endpoint);
-        req();
         log.info("Endpoint is: " + URL);
     }
 

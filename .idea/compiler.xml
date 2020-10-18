@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Adidas_TestAutomation_Assignment" />
+        <module name="Adidas_Test" />
       </profile>
     </annotationProcessing>
   </component>
