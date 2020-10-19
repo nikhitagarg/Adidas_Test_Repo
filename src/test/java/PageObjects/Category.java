@@ -3,20 +3,16 @@ package PageObjects;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class Category {
 
-    @FindBy(xpath = "//*[text()='CATEGORIES']")
+    @FindBy(xpath = "//*[@id='cat']")
     public WebElement categories;
-    @FindBy(xpath = "//*[text()='Phones']")
-    public WebElement phone;
-    @FindBy(xpath = "//*[text()='Laptops']")
-    public WebElement laptop;
-    @FindBy(xpath = "//*[text()='Monitors']")
-    public WebElement monitor;
-    @FindBy(xpath = "//*[text()='Sony vaio i5']")
-    public WebElement laptopName1;
-    @FindBy(xpath = "//*[text()='Dell i7 8gb']")
-    public WebElement laptopName2;
-    @FindBy(xpath="//a[@href='cart.html]")
+    @FindBy(xpath = "//*[@id='contcont']/div/div[1]/div/a")
+    public List<WebElement> category_item;
+    @FindBy(xpath = "//*[@class='hrefch']")
+    public List<WebElement> items;
+    @FindBy(xpath="//*[@id='cartur']")
     public WebElement cart;
 }

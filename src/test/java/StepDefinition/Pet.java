@@ -6,6 +6,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.cucumber.datatable.DataTable;
+import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import org.junit.Assert;
 
@@ -22,6 +23,7 @@ public class Pet extends TestBase {
     @Given("^User has the endpoint \"([^\"]*)\"$")
     public void user_has_the_endpoint_something(String endpoint) throws IOException {
         URL = getKeyValue("Base_URL") + getKeyValue(endpoint);
+        APIInitialize();
         log.info("Endpoint is: " + URL);
     }
 
@@ -41,12 +43,12 @@ public class Pet extends TestBase {
     @When("^User hit the \"([^\"]*)\" request$")
     public void user_hit_the_something_request(String method, DataTable dataToUse) {
         List<List<String>> data = dataToUse.asLists();
-        String value=null;
+        String value = null;
         for (int i = 0; i < data.size(); i++) {
             String param = data.get(i).get(0);
-            if(checkProperty(data.get(i).get(2)))
-                value=getProperty(data.get(i).get(2));
-            else value=data.get(i).get(2);
+            if (checkProperty(data.get(i).get(2)))
+                value = getProperty(data.get(i).get(2));
+            else value = data.get(i).get(2);
 
             if (param.equalsIgnoreCase("Content-type"))
                 request = request.contentType(data.get(i).get(1));
@@ -55,14 +57,12 @@ public class Pet extends TestBase {
                 log.info("Path param : " + data.get(i).get(1) + " with value : " + value);
             } else if (param.equalsIgnoreCase("query-param")) {
                 request = request.queryParam(data.get(i).get(1), value);
-                log.info("Query param : " + data.get(i).get(1) + " with value : " +value);
-            }
-            else if (param.equalsIgnoreCase("form-param")) {
+                log.info("Query param : " + data.get(i).get(1) + " with value : " + value);
+            } else if (param.equalsIgnoreCase("form-param")) {
                 request = request.formParam(data.get(i).get(1), value);
                 log.info("Form param : " + data.get(i).get(1) + " with value : " + value);
-            }
-            else if (param.equalsIgnoreCase("Header")) {
-                request =  request.header(new Header(data.get(i).get(1),value));
+            } else if (param.equalsIgnoreCase("Header")) {
+                request = request.header(new Header(data.get(i).get(1), value));
                 log.info("Header : " + data.get(i).get(1) + " with value : " + value);
             }
 
@@ -87,17 +87,17 @@ public class Pet extends TestBase {
     @And("^User validates the JsonResponse$")
     public void user_validates_the_jsonresponse(Map<String, String> map) {
         log.info(response.getBody().prettyPrint());
-        String value=null;
+        String value = null;
         for (Map.Entry<String, String> entrySet : map.entrySet()) {
-            if(checkProperty(entrySet.getValue()))
-               value=getProperty(entrySet.getValue());
-            else value=entrySet.getValue();
-            Object obj=response.jsonPath().get(entrySet.getKey()).getClass();
-            if(obj==Long.class)
-                Assert.assertEquals(Long.parseLong(value),response.jsonPath().getLong(entrySet.getKey()));
-            else if(obj==String.class)
+            if (checkProperty(entrySet.getValue()))
+                value = getProperty(entrySet.getValue());
+            else value = entrySet.getValue();
+            Object obj = response.jsonPath().get(entrySet.getKey()).getClass();
+            if (obj == Long.class)
+                Assert.assertEquals(Long.parseLong(value), response.jsonPath().getLong(entrySet.getKey()));
+            else if (obj == String.class)
                 Assert.assertEquals(value, response.jsonPath().getString(entrySet.getKey()));
-            else if(obj==Integer.class)
+            else if (obj == Integer.class)
                 Assert.assertEquals(Integer.parseInt(value), response.jsonPath().getInt(entrySet.getKey()));
         }
     }
@@ -116,7 +116,7 @@ public class Pet extends TestBase {
     @And("^User fetches the json values$")
     public void user_fetches_the_json_values(Map<String, String> data) {
         for (Map.Entry<String, String> entry : data.entrySet()) {
-            setProperty(entry.getKey(),response.jsonPath().getString(entry.getValue()));
+            setProperty(entry.getKey(), response.jsonPath().getString(entry.getValue()));
         }
     }
 }

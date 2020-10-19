@@ -4,12 +4,15 @@ import Common.TestBase;
 import PageMethods.CartMethods;
 import PageMethods.CategoryMethods;
 import PageMethods.LaptopMethods;
-import Utility.Utilities;
+
+import static Common.PropertyHolder.getProperty;
+
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.cucumber.datatable.DataTable;
+import org.junit.Assert;
 
 import java.io.IOException;
 import java.util.Map;
@@ -35,6 +38,7 @@ public class UI extends TestBase {
     @And("^Add products in cart$")
     public void add_products_in_cart(DataTable table) {
         for (int i = 0; i < table.asList().size(); i++) {
+
             categoryMethods.clickOnProduct(table.asList().get(i));
             laptopMethods.verifyProductPage();
             laptopMethods.addToCart();
@@ -52,12 +56,30 @@ public class UI extends TestBase {
     public void deletes_the_product_something(String productName) {
         cartMethods.deleteItem(productName);
     }
+
     @Then("^User places order$")
-    public void user_places_order(){
+    public void user_places_order() {
         cartMethods.placeOrder();
     }
-    @And("^fills order details$")
-    public void fills_order_details(Map<String,String> data){
 
+    @And("^User completes the purchase$")
+    public void user_completes_the_purchase(Map<String, String> data) {
+        cartMethods.fillDetails(data);
     }
+
+    @And("^User fetches purchase id \"([^\"]*)\" and amount \"([^\"]*)\"$")
+    public void user_fetches_purchase_id_something_and_amount_something(String purchaseId, String amount) {
+        cartMethods.fetchData(purchaseId, amount);
+    }
+
+    @And("^User fetches order total in \"([^\"]*)\"$")
+    public void user_fetches_order_total_in_something(String total) {
+        cartMethods.getTotal(total);
+    }
+
+    @And("^compare \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void compare_something_and_something(String actual, String expected) {
+        Assert.assertEquals(getProperty(actual), getProperty(expected));
+    }
+
 }

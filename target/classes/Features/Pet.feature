@@ -45,6 +45,7 @@ Feature: Get available pets
       | form-param   | name                              | <name>   |
       | form-param   | status                            | <status> |
     Then User verifies the status code as <statusCode>
+
     Given User has the endpoint "ENDPOINT_GET_UPDATE_DELETE_PET"
     When User hit the "GET" request
       | Content-type | application/json |         |

@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LaptopMethods extends TestBase {
     LaptopPage laptop = new LaptopPage();
@@ -22,6 +23,7 @@ public class LaptopMethods extends TestBase {
     }
     public void addToCart(){
         laptop.addToCart.click();
+        wait.until(ExpectedConditions.alertIsPresent());
         Assert.assertEquals("Product added",driver.switchTo().alert().getText());
         driver.switchTo().alert().accept();
     }

@@ -5,7 +5,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class LaptopPage {
 
-        @FindBy(xpath = "//*[text()='Add to cart']")
+        @FindBy(xpath = "//*[@class='row']/div/a")
         public WebElement addToCart;
 
 
